@@ -11,7 +11,7 @@ type Profile struct {
 	LastName          string          `json:"lastName,omitempty"`
 	Headline          string          `json:"headline,omitempty"`
 	Location          *Location       `json:"geoLocationName,omitempty"`
-	About             string          `json:"aboout,omitempty"`
+	About             string          `json:"about,omitempty"`
 	Premium           bool            `json:"premium,omitempty"`
 	Influencer        bool            `json:"influencer,omitempty"`
 	Memorialized      bool            `json:"memorialized,omitempty"`
