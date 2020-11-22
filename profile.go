@@ -23,6 +23,8 @@ type Profile struct {
 	IsFullProfile bool `json:"isFullProfile,omitempty"`
 	// True if profile compose from golinkedin.MiniProfile
 	IsMiniProfile bool `json:"isMiniProfile,omitempty"`
+
+	ln *Linkedin
 }
 
 // ProfileByName get profile by username
@@ -32,12 +34,28 @@ func (ln *Linkedin) ProfileByName(name string) (*Profile, error) {
 		return nil, err
 	}
 
-	return composeProfile(&prof.Elements[0]), nil
+	composed := composeProfile(&prof.Elements[0])
+	composed.ln = ln
+
+	return composed, nil
 }
 
-// func (prof *Profile) FullProfile() *Profile {
+// SetLinkedin set Linkedin client
+func (prof *Profile) SetLinkedin(ln *Linkedin) {
+	prof.ln = ln
+}
 
-// }
+// FullProfile get full profile version of Profile
+func (prof *Profile) FullProfile() (*Profile, error) {
+	raw, err := prof.ln.Linkedin.ProfileByUsername(prof.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	*prof = *composeProfile(&raw.Elements[0])
+
+	return prof, nil
+}
 
 // compose Profile from golinkedin.MiniProfile
 func composeMiniProfile(m *golinkedin.MiniProfile) *Profile {
