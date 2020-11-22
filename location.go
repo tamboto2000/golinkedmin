@@ -3,7 +3,8 @@ package golinkedmin
 import "github.com/tamboto2000/golinkedin"
 
 type Location struct {
-	Country        string `json:"country,omitempty"`
+	CountryCode    string `json:"countryCode,omitempty"`
+	Country        string `json:"country"`
 	GeographicArea string `json:"geographicArea,omitempty"`
 	City           string `json:"city,omitempty"`
 	PostalCode     string `json:"postalCode,omitempty"`
@@ -15,7 +16,7 @@ type Location struct {
 
 func composeLocation(loc *golinkedin.Location) *Location {
 	return &Location{
-		Country:        loc.Country,
+		CountryCode:    loc.Country,
 		GeographicArea: loc.GeographicArea,
 		City:           loc.City,
 		PostalCode:     loc.PostalCode,
