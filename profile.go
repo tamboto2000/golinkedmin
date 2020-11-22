@@ -19,6 +19,10 @@ type Profile struct {
 	Educations        []Education     `json:"schools,omitempty"`
 	Certifications    []Certification `json:"certifications,omitempty"`
 	Skills            []Skill         `json:"skills,omitempty"`
+	// True if profile composed from golinkedin.Profile
+	IsFullProfile bool `json:"isFullProfile,omitempty"`
+	// True if profile compose from golinkedin.MiniProfile
+	IsMiniProfile bool `json:"isMiniProfile,omitempty"`
 }
 
 // ProfileByName get profile by username
@@ -30,6 +34,10 @@ func (ln *Linkedin) ProfileByName(name string) (*Profile, error) {
 
 	return composeProfile(&prof.Elements[0]), nil
 }
+
+// func (prof *Profile) FullProfile() *Profile {
+
+// }
 
 // compose Profile from golinkedin.MiniProfile
 func composeMiniProfile(m *golinkedin.MiniProfile) *Profile {
