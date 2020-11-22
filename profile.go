@@ -42,10 +42,11 @@ func (ln *Linkedin) ProfileByName(name string) (*Profile, error) {
 // compose Profile from golinkedin.MiniProfile
 func composeMiniProfile(m *golinkedin.MiniProfile) *Profile {
 	prof := &Profile{
-		Username:  m.PublicIdentifier,
-		FirstName: m.FirstName,
-		LastName:  m.LastName,
-		Headline:  m.Occupation,
+		Username:      m.PublicIdentifier,
+		FirstName:     m.FirstName,
+		LastName:      m.LastName,
+		Headline:      m.Occupation,
+		IsMiniProfile: true,
 	}
 
 	// extract background picture
@@ -64,14 +65,15 @@ func composeMiniProfile(m *golinkedin.MiniProfile) *Profile {
 // compose Profile from golinkedin.Profile
 func composeProfile(p *golinkedin.Profile) *Profile {
 	prof := &Profile{
-		Username:     p.PublicIdentifier,
-		FirstName:    p.FirstName,
-		LastName:     p.LastName,
-		Headline:     p.Headline,
-		About:        p.Summary,
-		Premium:      p.Premium,
-		Influencer:   p.Influencer,
-		Memorialized: p.Memorialized,
+		Username:      p.PublicIdentifier,
+		FirstName:     p.FirstName,
+		LastName:      p.LastName,
+		Headline:      p.Headline,
+		About:         p.Summary,
+		Premium:       p.Premium,
+		Influencer:    p.Influencer,
+		Memorialized:  p.Memorialized,
+		IsFullProfile: true,
 	}
 
 	// extract profile picture
