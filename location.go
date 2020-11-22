@@ -4,7 +4,7 @@ import "github.com/tamboto2000/golinkedin"
 
 type Location struct {
 	CountryCode    string `json:"countryCode,omitempty"`
-	Country        string `json:"country"`
+	Country        string `json:"country,country"`
 	GeographicArea string `json:"geographicArea,omitempty"`
 	City           string `json:"city,omitempty"`
 	PostalCode     string `json:"postalCode,omitempty"`
