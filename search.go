@@ -17,10 +17,20 @@ type Search struct {
 	Companies []Company `json:"companies,omitempty"`
 	Schools   []School  `json:"schools,omitempty"`
 	Groups    []Group   `json:"groups,omitempty"`
-	Skills    []Skill   `json:"skills,omitmepty"`
+	Skills    []Skill   `json:"skills,omitempty"`
+	Type      string    `json:"type,omitempty"`
 	Paging    Paging    `json:"paging,omitempty"`
 
 	ln *Linkedin
+}
+
+// compose Paging from golinkedin.Paging
+func composePaging(p golinkedin.Paging) Paging {
+	return Paging{
+		Start: p.Start,
+		Count: p.Count,
+		Total: p.Total,
+	}
 }
 
 // Paging contains result cursor info.
@@ -36,7 +46,21 @@ func (srch *Search) SetLinkedin(ln *Linkedin) {
 	srch.ln = ln
 }
 
-// SearchPeople search people by keywords and filter
-func (ln *Linkedin) SearchPeople(keywords string, filter *golinkedin.PeopleSearchFilter) (*Search, error) {
-	return nil, nil
+// SearchProfile search people by keywords and filter
+func (ln *Linkedin) SearchProfile(keywords string, filter *golinkedin.PeopleSearchFilter) (*Search, error) {
+	res, err := ln.Linkedin.SearchPeople(keywords, filter)
+	if err != nil {
+		return nil, err
+	}
+
+	search := &Search{
+		Type: SearchProfile,
+		ln:   ln,
+	}
+	search.Paging = composePaging(res.Paging)
+	for _, p := range res.Elements[0].Elements {
+		search.Profiles = append(search.Profiles, *composeMiniProfile(p.Image.Attributes[0].MiniProfile))
+	}
+
+	return search, nil
 }
