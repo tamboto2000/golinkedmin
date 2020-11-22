@@ -57,9 +57,12 @@ func (ln *Linkedin) SearchProfile(keywords string, filter *golinkedin.PeopleSear
 		Type: SearchProfile,
 		ln:   ln,
 	}
+
 	search.Paging = composePaging(res.Paging)
 	for _, p := range res.Elements[0].Elements {
-		search.Profiles = append(search.Profiles, *composeMiniProfile(p.Image.Attributes[0].MiniProfile))
+		prof := *composeMiniProfile(p.Image.Attributes[0].MiniProfile)
+		prof.ln = ln
+		search.Profiles = append(search.Profiles, prof)
 	}
 
 	return search, nil
