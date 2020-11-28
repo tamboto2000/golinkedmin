@@ -15,12 +15,15 @@ type Education struct {
 func composeEducation(e *golinkedin.Education) *Education {
 	edu := &Education{
 		Activities:   e.Activities,
-		School:       composeSchool(e.School),
 		Description:  e.Description,
 		DegreeName:   e.DegreeName,
 		SchoolName:   e.SchoolName,
 		FieldOfStudy: e.FieldOfStudy,
 		DateRange:    composeDateRange(e.DateRange),
+	}
+
+	if e.School != nil {
+		edu.School = composeSchool(e.School)
 	}
 
 	return edu
