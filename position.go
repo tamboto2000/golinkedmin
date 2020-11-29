@@ -19,7 +19,11 @@ func composePosition(p *golinkedin.PositionGroup) *Position {
 		DateRange:    composeDateRange(p.DateRange),
 		LocationName: p.LocationName,
 		Description:  p.Description,
-		Company:      composeCompany(p.Company),
+		// Company:      composeCompany(p.Company),
+	}
+
+	if p.Company != nil {
+		post.Company = composeCompany(p.Company)
 	}
 
 	return post
