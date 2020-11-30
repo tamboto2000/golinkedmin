@@ -52,8 +52,8 @@ func (srch *Search) SetLinkedin(ln *Linkedin) {
 }
 
 // SearchProfile search people by keywords and filter
-func (ln *Linkedin) SearchProfile(keywords string, filter *golinkedin.PeopleSearchFilter) (*Search, error) {
-	res, err := ln.Linkedin.SearchPeople(keywords, filter, nil, "")
+func (ln *Linkedin) SearchProfile(keywords string, filter *golinkedin.PeopleSearchFilter, ctx *golinkedin.QueryContext, origin string) (*Search, error) {
+	res, err := ln.Linkedin.SearchPeople(keywords, filter, ctx, origin)
 	if err != nil {
 		return nil, err
 	}
