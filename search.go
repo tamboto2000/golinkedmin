@@ -53,7 +53,7 @@ func (srch *Search) SetLinkedin(ln *Linkedin) {
 
 // SearchProfile search people by keywords and filter
 func (ln *Linkedin) SearchProfile(keywords string, filter *golinkedin.PeopleSearchFilter) (*Search, error) {
-	res, err := ln.Linkedin.SearchPeople(keywords, filter)
+	res, err := ln.Linkedin.SearchPeople(keywords, filter, nil, "")
 	if err != nil {
 		return nil, err
 	}
