@@ -1,9 +1,12 @@
 package golinkedmin
 
-import "github.com/tamboto2000/golinkedin"
+import (
+	"github.com/tamboto2000/golinkedin"
+)
 
 // Profile contains people/user profile
 type Profile struct {
+	ID                string          `json:"id,omitempty"`
 	Username          string          `json:"username,omitempty"`
 	ProfilePicture    *Image          `json:"profilePicture,omitempty"`
 	BackgroundPicture *Image          `json:"backgroundPicture,omitempty"`
@@ -60,6 +63,7 @@ func (prof *Profile) FullProfile() (*Profile, error) {
 // compose Profile from golinkedin.MiniProfile
 func composeMiniProfile(m *golinkedin.MiniProfile) *Profile {
 	prof := &Profile{
+		ID:            extractID(m.EntityUrn),
 		Username:      m.PublicIdentifier,
 		FirstName:     m.FirstName,
 		LastName:      m.LastName,
@@ -83,6 +87,7 @@ func composeMiniProfile(m *golinkedin.MiniProfile) *Profile {
 // compose Profile from golinkedin.Profile
 func composeProfile(p *golinkedin.Profile) *Profile {
 	prof := &Profile{
+		ID:            extractID(p.EntityUrn),
 		Username:      p.PublicIdentifier,
 		FirstName:     p.FirstName,
 		LastName:      p.LastName,
