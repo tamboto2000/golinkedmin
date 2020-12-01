@@ -22,6 +22,9 @@ func (cn *Connections) Next() bool {
 		return false
 	}
 
+	cn.pnode.Paging.Start = cn.Start
+	cn.pnode.Paging.Count = cn.Count
+
 	miniProfs := make([]Profile, 0)
 	for cn.pnode.Next() {
 		for _, elm := range cn.pnode.Elements {
