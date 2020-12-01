@@ -55,7 +55,7 @@ func (srch *Search) SetLinkedin(ln *Linkedin) {
 func (ln *Linkedin) SearchProfile(keywords string, filter *golinkedin.PeopleSearchFilter, ctx *golinkedin.QueryContext, origin string) (*Search, error) {
 	res, err := ln.Linkedin.SearchPeople(keywords, filter, ctx, origin)
 	if err != nil {
-		return nil, err
+		return nil, parseErrMsg(err.Error())
 	}
 
 	if filter == nil {
@@ -96,7 +96,7 @@ func (srch *Search) Next() bool {
 
 // Error return error from cursoring operation
 func (srch *Search) Error() error {
-	return srch.err
+	return parseErrMsg(srch.err.Error())
 }
 
 // cursor for profile search

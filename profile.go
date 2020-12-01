@@ -34,7 +34,7 @@ type Profile struct {
 func (ln *Linkedin) ProfileByName(name string) (*Profile, error) {
 	prof, err := ln.Linkedin.ProfileByUsername(name)
 	if err != nil {
-		return nil, err
+		return nil, parseErrMsg(err.Error())
 	}
 
 	composed := composeProfile(&prof.Elements[0])
@@ -52,7 +52,7 @@ func (prof *Profile) SetLinkedin(ln *Linkedin) {
 func (prof *Profile) FullProfile() (*Profile, error) {
 	raw, err := prof.ln.Linkedin.ProfileByUsername(prof.Username)
 	if err != nil {
-		return nil, err
+		return nil, parseErrMsg(err.Error())
 	}
 
 	*prof = *composeProfile(&raw.Elements[0])
@@ -77,7 +77,7 @@ func (prof *Profile) Connections() (*Connections, error) {
 	)
 
 	if err != nil {
-		return nil, err
+		return nil, parseErrMsg(err.Error())
 	}
 
 	miniProfs := make([]Profile, 0)
