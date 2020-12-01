@@ -60,6 +60,48 @@ func (prof *Profile) FullProfile() (*Profile, error) {
 	return prof, nil
 }
 
+// Connections prepare and fetch the first result page of profile connections.
+// Use Connections.Next for pagination
+func (prof *Profile) Connections() (*Connections, error) {
+	raw, err := prof.ln.SearchPeople(
+		"",
+		&golinkedin.PeopleSearchFilter{
+			Network:      []string{golinkedin.Rank1, golinkedin.Rank2, golinkedin.Rank3},
+			ConnectionOf: prof.ID,
+			ResultType:   golinkedin.ResultPeople,
+		},
+		&golinkedin.QueryContext{
+			SpellCorrectionEnabled: true,
+		},
+		golinkedin.OriginMemberProfileCannedSearch,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	miniProfs := make([]Profile, 0)
+	for _, elm := range raw.Elements {
+		if elm.Type == golinkedin.TypeSearchHits {
+			for _, innerElm := range elm.Elements {
+				miniProfs = append(miniProfs, *composeMiniProfile(innerElm.Image.Attributes[0].MiniProfile))
+			}
+
+			break
+		}
+	}
+
+	conns := &Connections{
+		Profiles: miniProfs,
+		Start:    raw.Paging.Start,
+		Count:    raw.Paging.Count,
+		Total:    raw.Paging.Total,
+		pnode:    raw,
+	}
+
+	return conns, nil
+}
+
 // compose Profile from golinkedin.MiniProfile
 func composeMiniProfile(m *golinkedin.MiniProfile) *Profile {
 	prof := &Profile{
