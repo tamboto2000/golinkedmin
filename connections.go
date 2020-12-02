@@ -4,6 +4,13 @@ import "github.com/tamboto2000/golinkedin"
 
 // Connections store profile connections.
 // It is highly recommended to not modify Start and Count value
+// It is highly recommended to not modify Start and Count value
+// It is highly recommended to not modify Start and Count value
+// It is highly recommended to not modify Start and Count value
+// It is highly recommended to not modify Start and Count value
+// It is highly recommended to not modify Start and Count value
+// It is highly recommended to not modify Start and Count value
+// It is highly recommended to not modify Start and Count value
 type Connections struct {
 	Profiles []Profile `json:"profiles,omitempty"`
 	Start    int       `json:"start,omitempty"`
@@ -26,7 +33,7 @@ func (cn *Connections) Next() bool {
 	cn.pnode.Paging.Count = cn.Count
 
 	miniProfs := make([]Profile, 0)
-	for cn.pnode.Next() {
+	if cn.pnode.Next() {
 		for _, elm := range cn.pnode.Elements {
 			if elm.Type == golinkedin.TypeSearchHits {
 				for _, innerElm := range elm.Elements {
