@@ -19,7 +19,7 @@ type Profile struct {
 	Influencer        bool            `json:"influencer,omitempty"`
 	Memorialized      bool            `json:"memorialized,omitempty"`
 	Experience        []PositionGroup `json:"experience,omitempty"`
-	Educations        []Education     `json:"schools,omitempty"`
+	Educations        []Education     `json:"educations,omitempty"`
 	Certifications    []Certification `json:"certifications,omitempty"`
 	Skills            []Skill         `json:"skills,omitempty"`
 	// True if profile composed from golinkedin.Profile
