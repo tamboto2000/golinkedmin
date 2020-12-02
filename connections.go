@@ -63,5 +63,9 @@ func (cn *Connections) SetLinkedin(ln *Linkedin) {
 
 // Error return error
 func (cn *Connections) Error() error {
-	return parseErrMsg(cn.err.Error())
+	if cn.err != nil {
+		return parseErrMsg(cn.err.Error())
+	}
+
+	return nil
 }
