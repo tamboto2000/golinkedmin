@@ -49,8 +49,10 @@ func composeCompany(c *golinkedin.Company) *Company {
 
 	// extract logo
 	// from Company.Logo.VectorImage
-	if c.Logo.VectorImage != nil {
-		comp.Logo = composeImage(c.Logo.VectorImage)
+	if c.Logo != nil {
+		if c.Logo.VectorImage != nil {
+			comp.Logo = composeImage(c.Logo.VectorImage)
+		}
 	}
 
 	// extract background cover image
