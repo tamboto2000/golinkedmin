@@ -63,9 +63,11 @@ func composeCompany(c *golinkedin.Company) *Company {
 	}
 
 	// from Company.Logo.Image.COMLinkedinCommonVectorImage
-	if c.Logo.Image != nil {
-		if c.Logo.Image.COMLinkedinCommonVectorImage != nil {
-			comp.Logo = composeImage(c.Logo.COMLinkedinCommonVectorImage)
+	if c.Logo != nil {
+		if c.Logo.Image != nil {
+			if c.Logo.Image.COMLinkedinCommonVectorImage != nil {
+				comp.Logo = composeImage(c.Logo.COMLinkedinCommonVectorImage)
+			}
 		}
 	}
 
